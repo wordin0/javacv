@@ -230,6 +230,7 @@ This project was conceived at the Okutomi & Tanaka Laboratory, Tokyo Institute o
 
 ==Changes==
 
+ * Fixed `FFmpegFrameRecorder` not refreshing the resampler when the format of samples changes (issue #465)
  * Fixed `ObjectFinder` not working with recent versions of OpenCV, especially on Android (issue #214)
  * Added new `FrameRecorder.gopSize` property to let users set a desired GOP size instead of the default one of 12
  * `FFmpegFrameGrabber` now takes into account calls to `setPixelFormat()` (issue #429), but does not enforce it

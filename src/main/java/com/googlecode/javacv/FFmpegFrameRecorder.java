@@ -244,6 +244,7 @@ public class FFmpegFrameRecorder extends FrameRecorder {
     private AVStream video_st, audio_st;
     private SwsContext img_convert_ctx;
     private SwrContext samples_convert_ctx;
+    private int samples_channels, samples_format, samples_rate;
     private AVPacket video_pkt, audio_pkt;
     private int[] got_video_packet, got_audio_packet;
 
@@ -805,7 +806,7 @@ public class FFmpegFrameRecorder extends FrameRecorder {
             throw new Exception("Audio samples Buffer has unsupported type: " + samples);
         }
 
-        if (samples_convert_ctx == null) {
+        if (samples_convert_ctx == null || samples_channels != audioChannels || samples_format != inputFormat || samples_rate != sampleRate) {
             samples_convert_ctx = swr_alloc_set_opts(null, audio_c.channel_layout(), outputFormat, audio_c.sample_rate(),
                     av_get_default_channel_layout(audioChannels), inputFormat, sampleRate, 0, null);
             if (samples_convert_ctx == null) {
@@ -813,6 +814,9 @@ public class FFmpegFrameRecorder extends FrameRecorder {
             } else if ((ret = swr_init(samples_convert_ctx)) < 0) {
                 throw new Exception("swr_init() error " + ret + ": Cannot initialize the conversion context.");
             }
+            samples_channels = audioChannels;
+            samples_format = inputFormat;
+            samples_rate = sampleRate;
         }
 
         for (int i = 0; samples != null && i < samples.length; i++) {
