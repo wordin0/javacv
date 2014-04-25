@@ -220,6 +220,7 @@ This project was conceived at the Okutomi & Tanaka Laboratory, Tokyo Institute o
 
 ==Changes==
 
+ * Fixed `FFmpegFrameRecorder` not refreshing the resampler when the format of samples changes (issue #465)
  * Removed old NetBeans project files that cause a conflict when trying to open as a Maven project (issue #210)
  * Adjusted the samples a bit because of small changes in the API with the move to the JavaCPP Presets
  * Fixed `ObjectFinder` not working with recent versions of OpenCV, especially on Android (issue #214)
